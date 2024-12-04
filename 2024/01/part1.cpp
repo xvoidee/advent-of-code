@@ -5,28 +5,28 @@
 
 int main()
 {
-	std::ifstream f("input.txt");
+  std::ifstream f("input.txt");
 
-	int x, y;
+  int x, y;
 
-	std::vector<int> a, b;
+  std::vector<int> a, b;
 
-	while (f >> x >> y) {
-		a.push_back(x);
-		b.push_back(y);
-	}
+  while (f >> x >> y) {
+    a.push_back(x);
+    b.push_back(y);
+  }
 
-	std::sort(a.begin(), a.end());
-	std::sort(b.begin(), b.end());
+  std::sort(a.begin(), a.end());
+  std::sort(b.begin(), b.end());
 
-	int sum = 0;
+  int sum = 0;
 
-	for (int i = 0; i < a.size(); ++i) {
-		sum += std::abs(a[i] - b[i]);
-	}
+  for (int i = 0; i < a.size(); ++i) {
+    sum += std::abs(a[i] - b[i]);
+  }
 
-	std::cout << sum << '\n';
+  std::cout << sum << '\n';
 
-	return 0;
+  return 0;
 }
 

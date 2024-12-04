@@ -5,85 +5,85 @@
 
 bool is_safe(const std::vector<int> & v)
 {
-	bool asc;
-	bool valid = true;
-	int  index = -1;
+  bool asc;
+  bool valid = true;
+  int  index = -1;
 
-	int previous = 0;
+  int previous = 0;
 
-	for (int value : v) {
-		index++;
+  for (int value : v) {
+    index++;
 
-		if (index == 0) {
-			previous = value;
-			continue;
-		}
+    if (index == 0) {
+      previous = value;
+      continue;
+    }
 
-		if ((value == previous) || (std::abs(value - previous) > 3)) {
-			valid = false;
-			break;
-		}
+    if ((value == previous) || (std::abs(value - previous) > 3)) {
+      valid = false;
+      break;
+    }
 
-		if (index == 1) {
-			asc = value > previous;
-			previous = value;
-			continue;
-		}
+    if (index == 1) {
+      asc = value > previous;
+      previous = value;
+      continue;
+    }
 
-		if (asc) {
-			if (previous > value) {
-				valid = false;
-				break;
-			}
-		} else {
-			if (previous < value) {
-				valid = false;
-				break;
-			}
-		}
+    if (asc) {
+      if (previous > value) {
+        valid = false;
+        break;
+      }
+    } else {
+      if (previous < value) {
+        valid = false;
+        break;
+      }
+    }
 
-		previous = value;
-	}
+    previous = value;
+  }
 
-	return valid;
+  return valid;
 }
 
 int main()
 {
-	std::ifstream f("input.txt");
+  std::ifstream f("input.txt");
 
-	char buf[32];
-	int  amount = 0;
-	while (f.getline(buf, 32)) {
-		std::stringstream ss(buf);
+  char buf[32];
+  int  amount = 0;
+  while (f.getline(buf, 32)) {
+    std::stringstream ss(buf);
 
-		if (ss.str().empty()) {
-			break;
-		}
+    if (ss.str().empty()) {
+      break;
+    }
 
-		int value;
-		std::vector<int> v;
+    int value;
+    std::vector<int> v;
 
-		v.clear();
-		while (ss >> value) {
-			v.push_back(value);
-		}
+    v.clear();
+    while (ss >> value) {
+      v.push_back(value);
+    }
 
-		bool safe = false;
+    bool safe = false;
 
-		for (int i = 0; i < v.size(); ++i) {
-			auto copy = v;
-			copy.erase(copy.begin() + i);
-			safe |= is_safe(copy);
-		}
+    for (int i = 0; i < v.size(); ++i) {
+      auto copy = v;
+      copy.erase(copy.begin() + i);
+      safe |= is_safe(copy);
+    }
 
-		if (safe) {
-			amount++;
-		}
-	}
+    if (safe) {
+      amount++;
+    }
+  }
 
-	std::cout << amount << '\n';
+  std::cout << amount << '\n';
 
-	return 0;
+  return 0;
 }
 
