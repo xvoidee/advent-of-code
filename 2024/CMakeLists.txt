@@ -1,4 +1,4 @@
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 function(add_aoc_executables array)
   foreach (dir IN LISTS ${array})
