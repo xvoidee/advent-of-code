@@ -7,6 +7,6 @@ function(add_aoc_executables array)
   endforeach()
 endfunction()
 
-set(folders 01 02 03 04 05 06)
+set(folders 01 02 03 04 05 06 07)
 add_aoc_executables(folders)
 
