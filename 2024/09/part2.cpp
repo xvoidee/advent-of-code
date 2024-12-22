@@ -16,40 +16,12 @@ struct Chunk {
   }
 };
 
-void dbg(const Chunk & c, int padding)
-{
-  std::string s;
-  s.reserve(16);
-
-  for (int i = 0; i < c.length; ++i) {
-    if (c.isEmpty()) {
-      s += '.';
-    } else {
-      s += std::to_string(c.id);
-    }
-  }
-
-  if (padding != 0) {
-    printf("%*s", padding, s.c_str());
-  } else {
-    printf("%s", s.c_str());
-  }
-}
-
-void dbg(const std::vector<Chunk> & chunks)
-{
-  for (auto c : chunks) {
-    dbg(c, 0);
-  }
-}
-
 int main()
 {
   std::fstream f("input.txt");
   std::string l;
 
   f >> l;
-//  l = "2333133121414131402";
 
   std::vector<Chunk> chunks;
 
@@ -67,31 +39,29 @@ int main()
     chunks.push_back({length, ((i % 2) == 0) ? (i / 2) : -1});
   }
 
-  for (int i = chunks.size() - 1; i >= 2; --i) {
-    auto from = chunks[i];
-    if (from.isEmpty()) {
+  for (int from = chunks.size() - 1; from >= 2; --from) {
+    if (chunks[from].isEmpty()) {
       continue;
     }
 
-    for (int j = 1; j < i - 1; ++j) {
-      auto to = chunks[j];
-      if (to.isFile()) {
+    for (int to = 1; to <= from - 1; ++to) {
+      if (chunks[to].isFile()) {
         continue;
       }
 
-      if (to.length == from.length) {
-        chunks[j]    = chunks[i];
-        chunks[i].id = -1;
+      if (chunks[to].length == chunks[from].length) {
+        chunks[to  ]    = chunks[from];
+        chunks[from].id = -1;
 
         break;
-      } else if (to.length > from.length) {
-        chunks.insert(chunks.begin() + j, from);
+      } else if (chunks[to].length > chunks[from].length) {
+        chunks.insert(chunks.begin() + to, chunks[from]);
 
-        i += 1;
-        j += 1;
+        to   += 1;
+        from += 1;
 
-        chunks[i].id      = -1;
-        chunks[j].length -= from.length;
+        chunks[from].id      = -1;
+        chunks[to  ].length -= chunks[from].length;
 
         break;
       }
@@ -109,6 +79,7 @@ int main()
       checksum_pointer += 1;
     }
   }
+
   std::cout << checksum_value << '\n';
 
   return 0;
